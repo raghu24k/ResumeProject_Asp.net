@@ -1,0 +1,56 @@
+@model ResumeProject.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Sign In - ResumeAI";
+    Layout = "_Layout";
+}
+
+<nav class="auth-navbar">
+    <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+        <span class="logo-icon">📄</span>
+        ResumeAI
+    </a>
+    <div class="navbar-actions">
+        <a asp-controller="Account" asp-action="Login" class="btn btn-outline btn-sm">Login</a>
+        <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-sm">Get Started</a>
+    </div>
+</nav>
+
+<div class="auth-page" style="padding-top:80px;">
+    <div class="auth-card">
+        <h1 class="auth-title">Welcome Back</h1>
+        <p class="auth-subtitle">Sign in to continue building</p>
+
+        <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+
+        <form asp-action="Login" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label asp-for="Email" class="form-label">Email Address</label>
+                <input asp-for="Email" class="form-control" placeholder="name@example.com" id="loginEmail" />
+                <span asp-validation-for="Email" class="field-validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password" class="form-label">Password</label>
+                <input asp-for="Password" class="form-control" type="password" placeholder="Your password" id="loginPassword" />
+                <span asp-validation-for="Password" class="field-validation-error"></span>
+            </div>
+
+            <button type="submit" id="signInBtn" class="btn btn-primary btn-full" style="margin-top:8px; background:#fff; color:#111;">Sign In</button>
+        </form>
+
+        <div class="auth-link">
+            Don't have an account? <a asp-action="Register">Create one</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
