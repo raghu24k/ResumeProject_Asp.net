@@ -1,0 +1,337 @@
+@model ResumeProject.Models.Resume
+@{
+    Layout = null;
+    string tpl = Model.Template ?? "Professional";
+    string fullName = ((Model.FirstName ?? "") + " " + (Model.LastName ?? "")).Trim();
+    if (string.IsNullOrEmpty(fullName)) fullName = "Resume";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>@fullName - Resume</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* ── Reset ─────────────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            background: #e5e7eb;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* ── Loading overlay ───────────────────────────────── */
+        #loadingOverlay {
+            position: fixed; inset: 0;
+            background: rgba(13,11,26,0.92);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            z-index: 9999; color: #fff;
+        }
+        .spinner {
+            width: 48px; height: 48px;
+            border: 4px solid rgba(139,92,246,0.25);
+            border-top-color: #8b5cf6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 18px;
+        }
+        @@keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Resume Paper ──────────────────────────────────── */
+        .resume-paper {
+            width: 794px;   /* A4 at 96dpi */
+            min-height: 1123px;
+            background: #fff;
+            color: #111;
+            padding: 48px 52px;
+            font-size: 12px;
+            line-height: 1.55;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.15);
+            border-radius: 4px;
+        }
+
+        /* ── Header ────────────────────────────────────────── */
+        .rp-name {
+            font-size: 26px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+        .rp-contact {
+            text-align: center;
+            color: #555;
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+        .rp-links {
+            text-align: center;
+            font-size: 10px;
+            margin-bottom: 14px;
+        }
+        .rp-links a { text-decoration: none; }
+
+        /* ── Section Title ─────────────────────────────────── */
+        .rp-section-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin: 16px 0 6px;
+            border-bottom: 2px solid;
+            padding-bottom: 3px;
+        }
+
+        /* ── Template Colors ───────────────────────────────── */
+        .tpl-professional .rp-section-title { color: #7c3aed; border-color: #7c3aed; }
+        .tpl-professional .rp-links a      { color: #7c3aed; }
+
+        .tpl-modern .rp-section-title       { color: #0891b2; border-color: #0891b2; }
+        .tpl-modern .rp-name                { color: #0891b2; }
+        .tpl-modern .rp-links a             { color: #0891b2; }
+
+        .tpl-minimalist .rp-section-title   { color: #222; border-color: #222; }
+        .tpl-minimalist .rp-links a         { color: #555; }
+
+        /* ── Items ─────────────────────────────────────────── */
+        .rp-item { margin-bottom: 10px; position: relative; }
+        .rp-item-header { display: flex; justify-content: space-between; align-items: baseline; }
+        .rp-item-title  { font-weight: 600; font-size: 12.5px; }
+        .rp-item-date   { color: #777; font-size: 10px; white-space: nowrap; }
+        .rp-item-sub    { color: #555; font-size: 11px; margin-top: 1px; }
+        .rp-item-desc   { color: #444; font-size: 11px; margin-top: 3px; line-height: 1.5; }
+
+        /* ── Summary ───────────────────────────────────────── */
+        .rp-summary { color: #444; font-size: 11.5px; line-height: 1.6; }
+
+        /* ── Skills Grid ───────────────────────────────────── */
+        .rp-skills-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+        .rp-skill-tag {
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+        .tpl-professional .rp-skill-tag { background: #f3f0ff; color: #7c3aed; }
+        .tpl-modern .rp-skill-tag       { background: #ecfeff; color: #0891b2; }
+        .tpl-minimalist .rp-skill-tag   { background: #f3f4f6; color: #333; }
+
+        /* ── Print media: hide everything except the resume ── */
+        @@media print {
+            body { background: #fff; padding: 0; }
+            .resume-paper { box-shadow: none; width: 100%; padding: 32px 40px; min-height: auto; }
+            #loadingOverlay { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="loadingOverlay">
+    <div class="spinner"></div>
+    <div style="font-size:16px;font-weight:600;">Generating PDF…</div>
+    <div style="font-size:13px;color:#a09bb8;margin-top:6px;">Your resume is being prepared for download</div>
+</div>
+
+<div class="resume-paper tpl-@tpl.ToLower()" id="resumeContent">
+
+    <!-- ═══ HEADER ═══ -->
+    <div class="rp-name">@fullName</div>
+
+    @{
+        var contactParts = new List<string>();
+        if (!string.IsNullOrEmpty(Model.Email)) contactParts.Add(Model.Email);
+        if (!string.IsNullOrEmpty(Model.Phone)) contactParts.Add(Model.Phone);
+        if (!string.IsNullOrEmpty(Model.Location)) contactParts.Add(Model.Location);
+    }
+    @if (contactParts.Any())
+    {
+        <div class="rp-contact">@string.Join("  ·  ", contactParts)</div>
+    }
+
+    @{
+        var linkParts = new List<string>();
+        if (!string.IsNullOrEmpty(Model.LinkedIn)) linkParts.Add(Model.LinkedIn);
+        if (!string.IsNullOrEmpty(Model.Portfolio)) linkParts.Add(Model.Portfolio);
+    }
+    @if (linkParts.Any())
+    {
+        <div class="rp-links">
+            @foreach (var link in linkParts)
+            {
+                var href = link.StartsWith("http") ? link : "https://" + link;
+                <a href="@href" target="_blank">@link</a>
+                if (link != linkParts.Last()) { <text>  ·  </text> }
+            }
+        </div>
+    }
+
+    <!-- ═══ PROFESSIONAL SUMMARY ═══ -->
+    @if (!string.IsNullOrEmpty(Model.ProfessionalSummary))
+    {
+        <div class="rp-section-title">Professional Summary</div>
+        <div class="rp-summary">@Model.ProfessionalSummary</div>
+    }
+
+    <!-- ═══ WORK EXPERIENCE ═══ -->
+    @if (Model.WorkExperiences.Any())
+    {
+        <div class="rp-section-title">Work Experience</div>
+        @foreach (var exp in Model.WorkExperiences.OrderByDescending(e => e.StartDate))
+        {
+            <div class="rp-item">
+                <div class="rp-item-header">
+                    <span class="rp-item-title">@exp.JobTitle</span>
+                    <span class="rp-item-date">
+                        @exp.StartDate?.ToString("MMM yyyy") — @(exp.IsCurrent ? "Present" : exp.EndDate?.ToString("MMM yyyy"))
+                    </span>
+                </div>
+                <div class="rp-item-sub">
+                    @exp.Company@(!string.IsNullOrEmpty(exp.Location) ? ", " + exp.Location : "")
+                </div>
+                @if (!string.IsNullOrEmpty(exp.Description))
+                {
+                    <div class="rp-item-desc">@exp.Description</div>
+                }
+            </div>
+        }
+    }
+
+    <!-- ═══ EDUCATION ═══ -->
+    @if (Model.Educations.Any())
+    {
+        <div class="rp-section-title">Education</div>
+        @foreach (var edu in Model.Educations.OrderByDescending(e => e.EndDate ?? e.StartDate))
+        {
+            <div class="rp-item">
+                <div class="rp-item-header">
+                    <span class="rp-item-title">@edu.Degree@(!string.IsNullOrEmpty(edu.Location) ? " — " + edu.Location : "")</span>
+                    <span class="rp-item-date">
+                        @edu.StartDate?.ToString("MMM yyyy") — @edu.EndDate?.ToString("MMM yyyy")
+                    </span>
+                </div>
+                <div class="rp-item-sub">
+                    @edu.Institution
+                </div>
+                @if (!string.IsNullOrEmpty(edu.GradeGPA))
+                {
+                    <div class="rp-item-desc">GPA: @edu.GradeGPA</div>
+                }
+                @if (!string.IsNullOrEmpty(edu.Description))
+                {
+                    <div class="rp-item-desc">@edu.Description</div>
+                }
+            </div>
+        }
+    }
+
+    <!-- ═══ SKILLS ═══ -->
+    @if (Model.Skills.Any())
+    {
+        <div class="rp-section-title">Skills</div>
+        <div class="rp-skills-grid">
+            @foreach (var s in Model.Skills)
+            {
+                <span class="rp-skill-tag">@s.Name@(!string.IsNullOrEmpty(s.Level) ? " (" + s.Level + ")" : "")</span>
+            }
+        </div>
+    }
+
+    <!-- ═══ PROJECTS ═══ -->
+    @if (Model.Projects.Any())
+    {
+        <div class="rp-section-title">Projects</div>
+        @foreach (var p in Model.Projects.OrderByDescending(p => p.StartDate))
+        {
+            <div class="rp-item">
+                <div class="rp-item-header">
+                    <span class="rp-item-title">@p.Title</span>
+                    @if (p.StartDate.HasValue || p.EndDate.HasValue)
+                    {
+                        <span class="rp-item-date">
+                            @p.StartDate?.ToString("MMM yyyy")@(p.EndDate.HasValue ? " — " + p.EndDate?.ToString("MMM yyyy") : "")
+                        </span>
+                    }
+                </div>
+                @if (!string.IsNullOrEmpty(p.TechStack))
+                {
+                    <div class="rp-item-sub" style="font-style:italic;">Tech: @p.TechStack</div>
+                }
+                @if (!string.IsNullOrEmpty(p.ProjectUrl))
+                {
+                    <div style="font-size:10px;color:#7c3aed;margin-top:1px;">
+                        <a href="@p.ProjectUrl" style="color:inherit;text-decoration:none;">@p.ProjectUrl</a>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(p.Description))
+                {
+                    <div class="rp-item-desc">@p.Description</div>
+                }
+            </div>
+        }
+    }
+
+    <!-- ═══ CERTIFICATIONS ═══ -->
+    @if (Model.Certifications.Any())
+    {
+        <div class="rp-section-title">Certifications</div>
+        @foreach (var c in Model.Certifications)
+        {
+            <div class="rp-item">
+                <div class="rp-item-header">
+                    <span class="rp-item-title">@c.CertificationName</span>
+                    @if (!string.IsNullOrEmpty(c.DateEarned))
+                    {
+                        <span class="rp-item-date">@c.DateEarned</span>
+                    }
+                </div>
+                @if (!string.IsNullOrEmpty(c.IssuingOrganization))
+                {
+                    <div class="rp-item-sub">@c.IssuingOrganization</div>
+                }
+                @if (!string.IsNullOrEmpty(c.CredentialLink))
+                {
+                    <div style="font-size:10px;color:#7c3aed;margin-top:1px;">
+                        <a href="@c.CredentialLink" style="color:inherit;text-decoration:none;">@c.CredentialLink</a>
+                    </div>
+                }
+            </div>
+        }
+    }
+
+</div><!-- /resume-paper -->
+
+<!-- html2pdf.js (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+        var element = document.getElementById('resumeContent');
+        var fileName = '@Html.Raw(fullName.Replace("'", "\\'"))' + '_Resume.pdf';
+
+        var opt = {
+            margin:       [0, 0, 0, 0],
+            filename:     fileName,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+        };
+
+        html2pdf().set(opt).from(element).save().then(function () {
+            // Hide loading overlay after PDF is generated
+            var overlay = document.getElementById('loadingOverlay');
+            if (overlay) overlay.style.display = 'none';
+        }).catch(function (err) {
+            console.error('PDF generation error:', err);
+            var overlay = document.getElementById('loadingOverlay');
+            if (overlay) overlay.style.display = 'none';
+            alert('Error generating PDF. Please try using Ctrl+P to print instead.');
+        });
+    });
+</script>
+</body>
+</html>

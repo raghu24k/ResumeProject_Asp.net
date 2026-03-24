@@ -1,0 +1,399 @@
+@{
+    ViewData["Title"] = "AI Resume Analyzer - ResumeAI";
+    Layout = "_Layout";
+    string userName = ViewBag.UserName ?? "User";
+}
+
+<nav class="navbar">
+    <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+        <span class="logo-icon">📄</span> ResumeAI
+    </a>
+    <ul class="navbar-nav">
+        <li><a asp-controller="Resume" asp-action="Dashboard">Dashboard</a></li>
+        <li><a asp-controller="Resume" asp-action="Analyze" class="active">Analyze PDF</a></li>
+        <li><a asp-controller="InterviewPrep" asp-action="Index">Interview Prep</a></li>
+    </ul>
+    <div class="navbar-actions">
+        <span style="color:var(--text-secondary);font-size:14px;">👤 @userName</span>
+        <form asp-controller="Account" asp-action="Logout" method="post" style="margin:0;">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-outline btn-sm">→ Logout</button>
+        </form>
+    </div>
+</nav>
+
+<div style="max-width:1100px; margin:0 auto; padding:60px 32px; text-align:center;">
+    <!-- HEADER -->
+    <h1 style="font-size:44px; font-weight:800; margin-bottom:12px; font-family:'Inter',sans-serif;">
+        AI <span style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Resume Analyzer</span>
+    </h1>
+    <p style="color:var(--text-secondary); font-size:16px; margin-bottom:48px; max-width:600px; margin-left:auto; margin-right:auto; line-height:1.6;">
+        Upload your existing PDF resume and let our advanced AI scorer check it against ATS standards.
+    </p>
+
+    <!-- DRAG AND DROP BOX -->
+    <div id="dropZone"
+         style="background:var(--bg-card); border:2px dashed var(--border); border-radius:24px; padding:80px 40px; margin-bottom:40px; cursor:pointer; transition:all 0.3s; position:relative; overflow:hidden;">
+        <div id="dropContent">
+            <div style="width:64px; height:64px; background:rgba(139,92,246,0.12); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">
+                <span style="font-size:32px; color:var(--purple-light);">📤</span>
+            </div>
+            <h3 style="font-size:20px; font-weight:700; margin-bottom:8px;">Drag & drop your resume PDF</h3>
+            <p style="color:var(--text-muted); font-size:14px;">or click to browse files</p>
+            <input type="file" id="fileInput" accept=".pdf" style="display:none;" />
+        </div>
+
+        <div id="loadingContent" style="display:none;">
+            <div class="spinner" style="width:40px; height:40px; border:3px solid rgba(139,92,246,0.2); border-top-color:var(--purple-light); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 20px;"></div>
+            <h3 id="loadingTitle" style="font-size:20px; font-weight:700; margin-bottom:8px;">Extracting text from PDF...</h3>
+            <p id="loadingSub" style="color:var(--text-muted); font-size:14px;">This usually takes a few seconds</p>
+        </div>
+
+        <!-- Error message -->
+        <div id="errorContent" style="display:none;">
+            <div style="width:64px; height:64px; background:rgba(239,68,68,0.12); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">
+                <span style="font-size:32px;">❌</span>
+            </div>
+            <h3 style="font-size:20px; font-weight:700; margin-bottom:8px; color:#f87171;" id="errorTitle">Error</h3>
+            <p style="color:var(--text-muted); font-size:14px;" id="errorMsg"></p>
+            <button onclick="resetDropZone()" style="margin-top:16px; background:var(--gradient); color:#fff; border:none; padding:10px 24px; border-radius:50px; cursor:pointer; font-weight:600;">Try Again</button>
+        </div>
+    </div>
+
+    <!-- FEATURES ROW -->
+    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:24px;">
+        <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:32px 24px;">
+            <div style="width:40px; height:40px; background:rgba(139,92,246,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:20px; font-size:18px;">🎯</div>
+            <h4 style="font-size:16px; font-weight:700; margin-bottom:12px;">ATS Scoring</h4>
+            <p style="color:var(--text-secondary); font-size:13px; line-height:1.6;">Get a precise score out of 100 based on modern hiring standards.</p>
+        </div>
+        <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:32px 24px;">
+            <div style="width:40px; height:40px; background:rgba(52,211,153,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:20px; font-size:18px;">📄</div>
+            <h4 style="font-size:16px; font-weight:700; margin-bottom:12px;">Keyword Check</h4>
+            <p style="color:var(--text-secondary); font-size:13px; line-height:1.6;">Ensure your resume contains the right keywords for your industry.</p>
+        </div>
+        <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:32px 24px;">
+            <div style="width:40px; height:40px; background:rgba(245,158,11,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:20px; font-size:18px;">☁️</div>
+            <h4 style="font-size:16px; font-weight:700; margin-bottom:12px;">Instant Feedback</h4>
+            <p style="color:var(--text-secondary); font-size:13px; line-height:1.6;">Receive actionable suggestions to improve your resume instantly.</p>
+        </div>
+    </div>
+</div>
+
+<!-- RESULTS MODAL OVERLAY -->
+<div id="modalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); z-index:1000; align-items:center; justify-content:center; overflow-y:auto; padding:20px 0;">
+    <div style="background:#13131a; border:1px solid var(--border); width:90%; max-width:860px; border-radius:24px; overflow:hidden; position:relative; animation:modalSlideUp 0.4s ease-out; margin:auto;">
+        <button onclick="closeModal()" style="position:absolute; top:20px; right:24px; background:none; border:none; color:var(--text-muted); font-size:24px; cursor:pointer; z-index:10;">✕</button>
+
+        <div style="padding:32px 40px;">
+            <!-- Score Header -->
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+                <h2 style="font-size:24px; font-weight:700; margin:0;">Resume Analysis</h2>
+                <span id="scoreBadge" style="font-size:12px; font-weight:700; padding:4px 12px; border-radius:50px;"></span>
+            </div>
+
+            <!-- ATS Score Dial -->
+            <div style="text-align:center; margin-bottom:28px;">
+                <div style="position:relative; width:120px; height:120px; margin:0 auto;">
+                    <svg width="120" height="120" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,0.06)" stroke-width="10" fill="none"/>
+                        <circle id="scoreCircle" cx="60" cy="60" r="50" stroke="#8b5cf6" stroke-width="10" fill="none"
+                                stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314"
+                                transform="rotate(-90 60 60)" style="transition: stroke-dashoffset 1.5s ease;"/>
+                    </svg>
+                    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center;">
+                        <div id="scoreNumber" style="font-size:28px; font-weight:800; color:#fff;">0</div>
+                        <div style="font-size:10px; color:var(--text-muted);">ATS Score</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div style="background:rgba(139,92,246,0.06); border:1px solid rgba(139,92,246,0.15); border-radius:16px; padding:24px; margin-bottom:28px;">
+                <div style="display:flex; align-items:center; gap:8px; font-size:14px; font-weight:700; color:var(--purple-light); margin-bottom:12px;">
+                    💡 Overall Summary
+                </div>
+                <p id="summaryText" style="color:var(--text-secondary); font-size:14px; line-height:1.7; margin:0;"></p>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:28px; margin-bottom:28px;">
+                <!-- STRENGTHS -->
+                <div>
+                    <h3 style="display:flex; align-items:center; gap:8px; font-size:16px; font-weight:700; color:#10b981; margin-bottom:16px;">
+                        ✔ Strengths
+                    </h3>
+                    <div id="strengthsList" style="display:flex; flex-direction:column; gap:8px;"></div>
+                </div>
+
+                <!-- IMPROVEMENTS -->
+                <div>
+                    <h3 style="display:flex; align-items:center; gap:8px; font-size:16px; font-weight:700; color:#ef4444; margin-bottom:16px;">
+                        ✕ Areas for Improvement
+                    </h3>
+                    <div id="improvementsList" style="display:flex; flex-direction:column; gap:8px;"></div>
+                </div>
+            </div>
+
+            <!-- KEYWORDS -->
+            <div style="margin-bottom:24px;">
+                <h3 style="display:flex; align-items:center; gap:8px; font-size:16px; font-weight:700; color:#f59e0b; margin-bottom:12px;">
+                    🔑 Suggested Keywords
+                </h3>
+                <div id="keywordsList" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+            </div>
+
+            <!-- FORMATTING TIPS -->
+            <div>
+                <h3 style="display:flex; align-items:center; gap:8px; font-size:16px; font-weight:700; color:#3b82f6; margin-bottom:12px;">
+                    📐 Formatting Tips
+                </h3>
+                <div id="tipsList" style="display:flex; flex-direction:column; gap:8px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .result-card-mini {
+        background: rgba(16,185,129,0.06);
+        border: 1px solid rgba(16,185,129,0.15);
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 13px;
+        color: var(--text-secondary);
+        display: flex;
+        gap: 12px;
+        line-height: 1.5;
+    }
+    .result-card-mini .icon-check { color:#10b981; font-weight:bold; flex-shrink:0; }
+
+    .result-card-mini-danger {
+        background: rgba(239,68,68,0.04);
+        border: 1px solid rgba(239,68,68,0.15);
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 13px;
+        color: var(--text-secondary);
+        display: flex;
+        gap: 12px;
+        line-height: 1.5;
+    }
+    .result-card-mini-danger .icon-cross { color:#ef4444; font-weight:bold; flex-shrink:0; }
+
+    .result-card-mini-info {
+        background: rgba(59,130,246,0.06);
+        border: 1px solid rgba(59,130,246,0.15);
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 13px;
+        color: var(--text-secondary);
+        display: flex;
+        gap: 12px;
+        line-height: 1.5;
+    }
+
+    .keyword-tag {
+        background: rgba(245,158,11,0.1);
+        border: 1px solid rgba(245,158,11,0.25);
+        color: #f59e0b;
+        padding: 5px 14px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    @@keyframes spin { to { transform: rotate(360deg); } }
+    @@keyframes modalSlideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+</style>
+
+@section Scripts {
+<!-- PDF.js for extracting text from uploaded PDFs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const dropContent = document.getElementById('dropContent');
+    const loadingContent = document.getElementById('loadingContent');
+    const errorContent = document.getElementById('errorContent');
+    const modalOverlay = document.getElementById('modalOverlay');
+
+    // Click to upload
+    dropZone.onclick = (e) => {
+        if (loadingContent.style.display === 'none' || loadingContent.style.display === '') {
+            fileInput.click();
+        }
+    };
+
+    fileInput.onchange = (e) => {
+        if (e.target.files.length) handleFileUpload(e.target.files[0]);
+    };
+
+    // Drag and drop
+    dropZone.ondragover = (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = 'var(--purple-light)';
+        dropZone.style.background = 'rgba(139,92,246,0.04)';
+    };
+    dropZone.ondragleave = (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = 'var(--border)';
+        dropZone.style.background = 'var(--bg-card)';
+    };
+    dropZone.ondrop = (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = 'var(--border)';
+        dropZone.style.background = 'var(--bg-card)';
+        if (e.dataTransfer.files.length) handleFileUpload(e.dataTransfer.files[0]);
+    };
+
+    async function handleFileUpload(file) {
+        if (file.type !== 'application/pdf') {
+            showError('Invalid file type', 'Please upload a PDF file.');
+            return;
+        }
+        if (file.size > 10 * 1024 * 1024) {
+            showError('File too large', 'Please upload a PDF under 10 MB.');
+            return;
+        }
+
+        // Show loading
+        dropContent.style.display = 'none';
+        errorContent.style.display = 'none';
+        loadingContent.style.display = 'block';
+        document.getElementById('loadingTitle').textContent = 'Extracting text from PDF...';
+        document.getElementById('loadingSub').textContent = 'Reading your resume';
+
+        try {
+            // Step 1: Extract text from PDF using pdf.js
+            var resumeText = await extractPdfText(file);
+
+            if (!resumeText || resumeText.trim().length < 20) {
+                showError('Could not extract text', 'The PDF appears to be image-based or empty. Please try a text-based PDF.');
+                return;
+            }
+
+            // Step 2: Send to API for analysis
+            document.getElementById('loadingTitle').textContent = 'Analyzing with AI...';
+            document.getElementById('loadingSub').textContent = 'Our AI is reviewing your resume against ATS standards';
+
+            var response = await fetch('/Analyze/AnalyzePdfText', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ resumeText: resumeText })
+            });
+
+            if (!response.ok) {
+                var errData = await response.json().catch(() => ({}));
+                throw new Error(errData.error || 'Server error');
+            }
+
+            var result = await response.json();
+            showResults(result);
+
+        } catch (err) {
+            showError('Analysis failed', err.message || 'Something went wrong. Please try again.');
+        }
+    }
+
+    async function extractPdfText(file) {
+        var arrayBuffer = await file.arrayBuffer();
+        var pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        var allText = '';
+
+        for (var i = 1; i <= pdf.numPages; i++) {
+            var page = await pdf.getPage(i);
+            var textContent = await page.getTextContent();
+            var pageText = textContent.items.map(item => item.str).join(' ');
+            allText += pageText + '\n';
+        }
+        return allText;
+    }
+
+    function showResults(data) {
+        // Reset drop zone
+        dropContent.style.display = 'block';
+        loadingContent.style.display = 'none';
+        errorContent.style.display = 'none';
+
+        // Score
+        var score = data.atsScore || 0;
+        var scoreColor = score >= 80 ? '#10b981' : score >= 60 ? '#f59e0b' : '#ef4444';
+        var scoreBg = score >= 80 ? 'rgba(16,185,129,0.2)' : score >= 60 ? 'rgba(245,158,11,0.2)' : 'rgba(239,68,68,0.2)';
+        var scoreBorder = score >= 80 ? 'rgba(16,185,129,0.3)' : score >= 60 ? 'rgba(245,158,11,0.3)' : 'rgba(239,68,68,0.3)';
+        var scoreLabel = score >= 80 ? 'Excellent' : score >= 60 ? 'Good' : 'Needs Work';
+
+        document.getElementById('scoreBadge').textContent = 'ATS Score: ' + score + '/100 — ' + scoreLabel;
+        document.getElementById('scoreBadge').style.cssText = 'background:' + scoreBg + ';color:' + scoreColor + ';font-size:12px;font-weight:700;padding:4px 12px;border-radius:50px;border:1px solid ' + scoreBorder;
+        document.getElementById('scoreNumber').textContent = score;
+
+        // Animate circle
+        var circle = document.getElementById('scoreCircle');
+        circle.style.stroke = scoreColor;
+        var offset = 314 - (314 * score / 100);
+        setTimeout(() => { circle.style.strokeDashoffset = offset; }, 100);
+
+        // Summary
+        document.getElementById('summaryText').textContent = data.summary || 'Analysis complete.';
+
+        // Strengths
+        var strengthsHtml = '';
+        (data.strengths || []).forEach(s => {
+            strengthsHtml += '<div class="result-card-mini"><span class="icon-check">✔</span>' + escHtml(s) + '</div>';
+        });
+        document.getElementById('strengthsList').innerHTML = strengthsHtml;
+
+        // Improvements
+        var improvementsHtml = '';
+        (data.improvements || []).forEach(s => {
+            improvementsHtml += '<div class="result-card-mini-danger"><span class="icon-cross">✕</span>' + escHtml(s) + '</div>';
+        });
+        document.getElementById('improvementsList').innerHTML = improvementsHtml;
+
+        // Keywords
+        var keywordsHtml = '';
+        (data.keywordSuggestions || []).forEach(k => {
+            keywordsHtml += '<span class="keyword-tag">' + escHtml(k) + '</span>';
+        });
+        document.getElementById('keywordsList').innerHTML = keywordsHtml;
+
+        // Tips
+        var tipsHtml = '';
+        (data.formattingTips || []).forEach(t => {
+            tipsHtml += '<div class="result-card-mini-info">📐 ' + escHtml(t) + '</div>';
+        });
+        document.getElementById('tipsList').innerHTML = tipsHtml;
+
+        // Show modal
+        modalOverlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function showError(title, message) {
+        dropContent.style.display = 'none';
+        loadingContent.style.display = 'none';
+        errorContent.style.display = 'block';
+        document.getElementById('errorTitle').textContent = title;
+        document.getElementById('errorMsg').textContent = message;
+    }
+
+    function resetDropZone() {
+        dropContent.style.display = 'block';
+        loadingContent.style.display = 'none';
+        errorContent.style.display = 'none';
+        fileInput.value = '';
+    }
+
+    function closeModal() {
+        modalOverlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    function escHtml(str) {
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+</script>
+}
