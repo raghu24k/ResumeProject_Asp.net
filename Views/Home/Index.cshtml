@@ -1,0 +1,49 @@
+@{
+    ViewData["Title"] = "ResumeAI - Build a Resume that Defeats the ATS";
+    Layout = "_Layout";
+}
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+        <span class="logo-icon">📄</span>
+        ResumeAI
+    </a>
+    <div class="navbar-actions">
+        <a asp-controller="Account" asp-action="Login" class="btn btn-outline btn-sm">Login</a>
+        <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-sm">Get Started</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-badge">✨ AI-Powered Resume Builder</div>
+    <h1>
+        Build a Resume that<br/>
+        <span class="gradient-text">Defeats the ATS</span>
+    </h1>
+    <p>Create professional resumes in minutes with our drag-and-drop builder. Use AI to analyze and optimize your resume for maximum impact.</p>
+    <div class="hero-actions">
+        <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Build My Resume →</a>
+        <a asp-controller="Account" asp-action="Login" class="btn btn-outline">I already have an account</a>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+    <div class="feature-card">
+        <div class="feature-icon">✦</div>
+        <h3 class="feature-title">AI Analysis</h3>
+        <p class="feature-desc">Get instant feedback on your resume. Our AI scores your content against industry standards.</p>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3 class="feature-title">ATS Friendly</h3>
+        <p class="feature-desc">Ensure your resume passes the bots. We use ATS-optimized templates and formatting.</p>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3 class="feature-title">Real-time Builder</h3>
+        <p class="feature-desc">See changes instantly. Split screen view allows you to edit and preview simultaneously.</p>
+    </div>
+</section>
