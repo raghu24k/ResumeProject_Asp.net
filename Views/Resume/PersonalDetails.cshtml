@@ -1,0 +1,214 @@
+@model ResumeProject.Models.Resume
+@{
+    ViewData["Title"] = "Personal Details - ResumeAI";
+    Layout = "_Layout";
+    string userName = ViewBag.UserName ?? "User";
+    string tpl = Model.Template ?? "Professional";
+}
+
+<nav class="navbar">
+    <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+        <span class="logo-icon">📄</span> ResumeAI
+    </a>
+    <ul class="navbar-nav">
+        <li><a asp-controller="Resume" asp-action="Dashboard">Dashboard</a></li>
+        <li><a asp-controller="Resume" asp-action="Analyze">Analyze PDF</a></li>
+        <li><a asp-controller="InterviewPrep" asp-action="Index">Interview Prep</a></li>
+    </ul>
+    <div class="navbar-actions">
+        <span style="color:var(--text-secondary);font-size:14px;">👤 @userName</span>
+        <form asp-controller="Account" asp-action="Logout" method="post" style="margin:0;">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-outline btn-sm">→ Logout</button>
+        </form>
+    </div>
+</nav>
+
+<div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-label">Templates</div>
+            <form asp-controller="Resume" asp-action="SetTemplate" method="post" style="margin:0;">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="resumeId" value="@Model.Id" />
+                <input type="hidden" name="template" value="Modern" />
+                <button type="submit" class="sidebar-item @(tpl=="Modern"?"active":"")" style="width:100%;text-align:left;border:none;background:none;cursor:pointer;">Modern</button>
+            </form>
+            <form asp-controller="Resume" asp-action="SetTemplate" method="post" style="margin:0;">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="resumeId" value="@Model.Id" />
+                <input type="hidden" name="template" value="Minimalist" />
+                <button type="submit" class="sidebar-item @(tpl=="Minimalist"?"active":"")" style="width:100%;text-align:left;border:none;background:none;cursor:pointer;">Minimalist</button>
+            </form>
+            <form asp-controller="Resume" asp-action="SetTemplate" method="post" style="margin:0;">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="resumeId" value="@Model.Id" />
+                <input type="hidden" name="template" value="Professional" />
+                <button type="submit" class="sidebar-item @(tpl=="Professional"?"active":"")" style="width:100%;text-align:left;border:none;background:none;cursor:pointer;">Professional</button>
+            </form>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-label">Sections</div>
+            <a asp-controller="Resume" asp-action="PersonalDetails" asp-route-id="@Model.Id" class="sidebar-item active">Personal Detail</a>
+            <a asp-controller="Resume" asp-action="Experience" asp-route-id="@Model.Id" class="sidebar-item">Experience</a>
+            <a asp-controller="Resume" asp-action="Education" asp-route-id="@Model.Id" class="sidebar-item">Education</a>
+            <a asp-controller="Resume" asp-action="Skills" asp-route-id="@Model.Id" class="sidebar-item">Skills</a>
+            <a asp-controller="Resume" asp-action="Projects" asp-route-id="@Model.Id" class="sidebar-item">Projects</a>
+            <a asp-controller="Resume" asp-action="Certifications" asp-route-id="@Model.Id" class="sidebar-item">Certifications</a>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">✓ @TempData["Success"]</div>
+        }
+
+        <form asp-action="PersonalDetails" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Template" />
+
+            <div class="page-header">
+                <h1 class="page-title">Personal Details</h1>
+                <div class="page-actions">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="analyzeAI(@Model.Id)">✨ Analyze AI</button>
+                    <a href="/Resume/DownloadView/@Model.Id" target="_blank" class="btn btn-success btn-sm">⬇ Download PDF</a>
+                    <button type="submit" id="savePersonalBtn" class="btn btn-ghost btn-sm" style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.25);">💾 Save</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input asp-for="FirstName" class="form-control" placeholder="Raghuwinder" id="firstName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input asp-for="LastName" class="form-control" placeholder="Kumar" id="lastName" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input asp-for="Email" class="form-control" placeholder="you@example.com" id="emailField" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input asp-for="Phone" class="form-control" placeholder="+91 98765 43210" id="phoneField" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <input asp-for="Location" class="form-control" placeholder="City, State" id="locationField" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">LinkedIn URL</label>
+                        <input asp-for="LinkedIn" class="form-control" placeholder="linkedin.com/in/yourname" id="linkedinField" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Portfolio / GitHub URL</label>
+                    <input asp-for="Portfolio" class="form-control" placeholder="github.com/yourname" id="portfolioField" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Professional Summary</label>
+                    <textarea asp-for="ProfessionalSummary" class="form-control" rows="5" id="summaryField"
+                        placeholder="Write a compelling summary about yourself..."></textarea>
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <!-- RESUME PREVIEW -->
+    <aside class="resume-preview-panel">
+        <div style="font-size:13px;font-weight:600;color:var(--text-secondary);margin-bottom:14px;text-align:center;">Live Preview</div>
+        <div class="resume-paper tpl-@tpl.ToLower()" id="resumePreview">
+            <h1 id="prevName">@Model.FirstName @Model.LastName</h1>
+            <div class="rp-subtitle" id="prevContact">
+                @Model.Email @(!string.IsNullOrEmpty(Model.Phone) ? "· " + Model.Phone : "") @(!string.IsNullOrEmpty(Model.Location) ? "· " + Model.Location : "")
+            </div>
+            <div class="rp-subtitle" id="prevLinks" style="color:var(--purple);margin-top:2px; @(string.IsNullOrEmpty(Model.LinkedIn) && string.IsNullOrEmpty(Model.Portfolio) ? "display:none;" : "")">
+                @Model.LinkedIn @(!string.IsNullOrEmpty(Model.Portfolio) ? "· " + Model.Portfolio : "")
+            </div>
+
+            <div id="prevSummarySection" style="@(string.IsNullOrEmpty(Model.ProfessionalSummary) ? "display:none;" : "")">
+                <div class="rp-section-title">Profile</div>
+                <p id="prevSummary" style="color:#444;font-size:10px;">@Model.ProfessionalSummary</p>
+            </div>
+
+            @if (Model.WorkExperiences.Any())
+            {
+                <div class="rp-section-title">Work History</div>
+                @foreach (var exp in Model.WorkExperiences)
+                {
+                    <div class="rp-item">
+                        <span class="rp-item-title">@exp.JobTitle</span>
+                        <span class="rp-item-date">@exp.StartDate?.ToString("M/d/yy") - @(exp.IsCurrent ? "Present" : exp.EndDate?.ToString("M/d/yy"))</span>
+                        <div class="rp-item-sub">@exp.Company</div>
+                    </div>
+                }
+            }
+
+            @if (Model.Skills.Any())
+            {
+                <div class="rp-section-title">Expertise</div>
+                <div class="rp-skills">
+                    @foreach (var skill in Model.Skills)
+                    {
+                        <span class="rp-skill-tag">@skill.Name (@skill.Level)</span>
+                    }
+                </div>
+            }
+
+            @if (Model.Educations.Any())
+            {
+                <div class="rp-section-title">Education</div>
+                @foreach (var edu in Model.Educations)
+                {
+                    <div class="rp-item">
+                        <span class="rp-item-title">@edu.Degree</span>
+                        <div class="rp-item-sub">@edu.Institution</div>
+                    </div>
+                }
+            }
+
+            @if (Model.Projects.Any())
+            {
+                <div class="rp-section-title">Projects</div>
+                @foreach (var p in Model.Projects)
+                {
+                    <div class="rp-item">
+                        <span class="rp-item-title">@p.Title</span>
+                        <div class="rp-item-sub">@p.TechStack</div>
+                    </div>
+                }
+            }
+
+            @if (Model.Certifications.Any())
+            {
+                <div class="rp-section-title">Certifications</div>
+                @foreach (var c in Model.Certifications)
+                {
+                    <div class="rp-item">
+                        <span class="rp-item-title">@c.CertificationName</span>
+                        <div class="rp-item-sub">@c.IssuingOrganization · @c.DateEarned</div>
+                    </div>
+                }
+            }
+        </div>
+    </aside>
+</div>
+
+@section Scripts {
+<script>
+    initPersonalDetailsPreview();
+</script>
+}
