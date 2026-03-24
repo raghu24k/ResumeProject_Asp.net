@@ -1,0 +1,252 @@
+@{
+    ViewData["Title"] = "Interview Prep - ResumeAI";
+    Layout = "_Layout";
+    string userName = ViewBag.UserName ?? "User";
+    string tab = ViewBag.Tab ?? "hr";
+    string domain = ViewBag.Domain ?? "Frontend Development";
+
+    var techDomains = new[]
+    {
+        "Frontend Development",
+        "Backend Development",
+        "Full Stack Development",
+        "Python & Data Science",
+        "Mobile Development",
+        "DevOps & Cloud"
+    };
+
+    var techQuestions = new Dictionary<string, List<(string Q, string A)>>
+    {
+        ["Frontend Development"] = new()
+        {
+            ("What is the difference between Virtual DOM and Real DOM?", "The Real DOM is the actual browser DOM that directly manipulates HTML. The Virtual DOM is a lightweight in-memory representation. React diffs the virtual DOM and only applies minimal real DOM updates, making it faster."),
+            ("Explain hoisting in JavaScript.", "Hoisting is JavaScript's default behavior of moving declarations to the top of the current scope before code execution. Variable declarations (var) and function declarations are hoisted, but not initializations."),
+            ("What are the common lifecycle methods in React?", "Key lifecycle methods include componentDidMount (after first render), componentDidUpdate (after updates), componentWillUnmount (before removal). In functional components, useEffect covers all these."),
+            ("What is CSS Flexbox and when should you use it?", "Flexbox is a one-dimensional layout method for laying out items in rows or columns. It's best for small-scale layouts, centering items, and making UI components responsive."),
+            ("What is a Closure in JavaScript?", "A closure is a function that retains access to its outer (enclosing) function's variables even after the outer function has returned. It's commonly used for data encapsulation and factory functions."),
+            ("Explain the difference between == and === in JavaScript.", "== performs type coercion before comparison (loose equality), while === checks both value and type without coercion (strict equality). Always prefer === to avoid unexpected behavior."),
+            ("What is CSS Grid and how does it differ from Flexbox?", "CSS Grid is a two-dimensional layout system handling both rows and columns. Flexbox is one-dimensional (row or column). Use Grid for page-level layouts and Flexbox for component-level alignment.")
+        },
+        ["Backend Development"] = new()
+        {
+            ("What is REST and what are its principles?", "REST (Representational State Transfer) is an architectural style using HTTP methods. Principles include statelessness, client-server separation, uniform interface, cacheability, and layered system."),
+            ("Explain the difference between SQL and NoSQL databases.", "SQL databases are relational, table-based, and use structured schemas (e.g., SQL Server, PostgreSQL). NoSQL databases are non-relational, flexible schema, with types like document (MongoDB), key-value (Redis), and graph."),
+            ("What is middleware in ASP.NET Core?", "Middleware are software components assembled into an application pipeline to handle requests and responses. Each component chooses to pass to the next or short-circuit the pipeline."),
+            ("What is dependency injection and why is it useful?", "Dependency Injection (DI) is a design pattern where objects receive their dependencies from external sources rather than creating them. It promotes loose coupling, testability, and maintainability."),
+            ("Explain the concept of database indexing.", "A database index is a data structure that improves query speed by providing quick lookup. It works like a book index — pointing directly to the data location. Trade-off: faster reads but slower writes."),
+            ("What is JWT and how does authentication work with it?", "JSON Web Tokens (JWT) are compact, self-contained tokens for securely transmitting information. After login, the server issues a JWT; the client sends it in headers for subsequent requests."),
+            ("What is the N+1 query problem?", "The N+1 problem occurs when fetching a list of N records triggers N additional queries for related data. Solution: use eager loading (.Include() in EF Core) to fetch all data in one query.")
+        },
+        ["Full Stack Development"] = new()
+        {
+            ("What is the MVC pattern and how does it work?", "MVC (Model-View-Controller) separates an application into three components: Model (data/logic), View (UI), and Controller (handles input, updates model, selects view). This promotes clean separation of concerns."),
+            ("Explain how you would handle CORS in a web application.", "CORS (Cross-Origin Resource Sharing) is handled by the server sending specific HTTP headers (Access-Control-Allow-Origin). In ASP.NET Core, configure CORS policy in Program.cs with AddCors() and UseCors()."),
+            ("What is the difference between server-side and client-side rendering?", "SSR renders HTML on the server and sends it to the client (faster initial load, SEO-friendly). CSR renders in the browser using JavaScript (faster subsequent navigation, richer interactions)."),
+            ("How do you optimize a web application for performance?", "Optimization strategies include: lazy loading, code splitting, caching, CDN usage, image optimization, minimizing HTTP requests, database query optimization, and using async/await properly."),
+            ("What is WebSocket and when should you use it?", "WebSockets provide full-duplex communication over a single TCP connection. Use it for real-time features like live chat, notifications, live dashboards, and collaborative tools."),
+            ("Explain CI/CD and its benefits.", "CI/CD (Continuous Integration / Continuous Deployment) automates building, testing, and deploying code. Benefits: faster releases, early bug detection, reduced manual errors, consistent deployments.")
+        },
+        ["Python & Data Science"] = new()
+        {
+            ("What is the difference between a list and a tuple in Python?", "Lists are mutable (can be changed), ordered sequences. Tuples are immutable (cannot be changed), ordered sequences. Tuples are faster and used for fixed data like coordinates or DB records."),
+            ("Explain Python decorators.", "Decorators modify the behavior of functions or classes without changing their source code. They use the @decorator syntax and are essentially higher-order functions that wrap the original function."),
+            ("What is Pandas and how is it used in data science?", "Pandas is a Python library for data manipulation and analysis. It provides DataFrames (2D tables) and Series (1D arrays) with powerful tools for data cleaning, transformation, and analysis."),
+            ("Explain the difference between supervised and unsupervised learning.", "Supervised learning trains on labeled data (classification, regression). Unsupervised learning finds patterns in unlabeled data (clustering, dimensionality reduction like PCA)."),
+            ("What is overfitting and how do you prevent it?", "Overfitting is when a model learns training data too well, failing to generalize. Prevention: cross-validation, regularization (L1/L2), dropout, early stopping, more training data."),
+            ("What is NumPy and why is it important?", "NumPy provides support for large multidimensional arrays and mathematical functions. It's the foundation of the Python scientific computing ecosystem, used by Pandas, Scikit-learn, and TensorFlow.")
+        },
+        ["Mobile Development"] = new()
+        {
+            ("What is React Native and how does it work?", "React Native allows building mobile apps using JavaScript and React. It translates components to native platform views (UIView on iOS, android.view.View on Android), giving native performance."),
+            ("Explain the difference between native and hybrid apps.", "Native apps are built with platform-specific languages (Swift/Kotlin), offering best performance. Hybrid apps use web technologies wrapped in a native shell, trading some performance for code reusability."),
+            ("What is state management in mobile development?", "State management handles how data flows and changes in your app. Common solutions include Redux, MobX, Zustand, and built-in approaches like React's useState/useContext and Flutter's Provider/Bloc.")
+        },
+        ["DevOps & Cloud"] = new()
+        {
+            ("What is Docker and why is it used?", "Docker is a containerization platform that packages applications with their dependencies into containers. This ensures consistent environments across development, testing, and production."),
+            ("Explain Kubernetes in simple terms.", "Kubernetes is a container orchestration platform that automates deployment, scaling, and management of containerized applications across clusters of machines."),
+            ("What is infrastructure as code (IaC)?", "IaC manages and provisions infrastructure through machine-readable config files rather than manual processes. Tools include Terraform, Azure Bicep, and AWS CloudFormation.")
+        }
+    };
+
+    var hrQuestions = new List<(string Q, string A)>
+    {
+        ("Tell me about yourself.", "Structure your answer using the Present-Past-Future formula: Start with your current role and skills, briefly mention relevant past experience, then share your future goals and how this position aligns with them. Keep it concise — under 2 minutes."),
+        ("What are your strengths and weaknesses?", "For strengths, pick ones relevant to the job and back them up with examples. For weaknesses, choose a genuine one but show what you're doing to improve it. Avoid clichés like 'I'm a perfectionist.'"),
+        ("Why should we hire you?", "Connect your specific skills and experience to the company's needs. Show them that you not only meet the requirements but also bring extra value or a great cultural fit."),
+        ("Describe a challenge you faced and how you handled it.", "Use the STAR method: Situation (set the context), Task (your responsibility), Action (what you did), Result (the outcome). Focus on a professional challenge and emphasize what you learned."),
+        ("Where do you see yourself in 5 years?", "Show ambition aligned with the company's growth. Mention specific skills you want to develop and roles you aspire to, while demonstrating commitment to the organization."),
+        ("Why do you want to work here?", "Research the company beforehand. Mention specific things you admire — their culture, product, mission, or recent achievements — and explain how they align with your career goals."),
+        ("How do you handle pressure and tight deadlines?", "Give a real example showing you stay calm, prioritize tasks, communicate proactively, and deliver quality work under pressure. Mention any productivity systems you use."),
+        ("Do you prefer working alone or in a team?", "Show flexibility. Mention that you enjoy both: you're productive independently but also value collaboration and diverse perspectives that come from teamwork.")
+    };
+
+    var currentTechQuestions = techQuestions.ContainsKey(domain) ? techQuestions[domain] : techQuestions["Frontend Development"];
+}
+
+<nav class="navbar">
+    <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+        <span class="logo-icon">📄</span> ResumeAI
+    </a>
+    <ul class="navbar-nav">
+        <li><a asp-controller="Resume" asp-action="Dashboard">Dashboard</a></li>
+        <li><a asp-controller="Resume" asp-action="PersonalDetails">Analyze PDF</a></li>
+        <li><a asp-controller="InterviewPrep" asp-action="Index" class="active">Interview Prep</a></li>
+    </ul>
+    <div class="navbar-actions">
+        <span style="color:var(--text-secondary);font-size:14px;">👤 @userName</span>
+        <form asp-controller="Account" asp-action="Logout" method="post" style="margin:0;">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-danger btn-sm" style="border-radius:8px;">→ Logout</button>
+        </form>
+    </div>
+</nav>
+
+<div style="max-width:1100px; margin:0 auto; padding:40px 32px;">
+    <!-- HEADER ROW -->
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:32px; gap:24px; flex-wrap:wrap;">
+        <div>
+            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.3);border-radius:50px;padding:5px 14px;font-size:12px;color:var(--purple-light);margin-bottom:16px;">
+                🎯 Interview Master
+            </div>
+            <h1 style="font-size:clamp(28px,4vw,44px);font-weight:800;line-height:1.15;margin-bottom:10px;">
+                Ace Your <span style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Next Interview</span>
+            </h1>
+            <p style="color:var(--text-secondary);font-size:14px;max-width:380px;line-height:1.6;">
+                Select your domain to browse common technical questions or practice essential HR &amp; behavioral responses.
+            </p>
+        </div>
+        <!-- SEARCH -->
+        <div style="position:relative;flex-shrink:0;">
+            <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:16px;">🔍</span>
+            <input id="searchInput" type="text" placeholder="Search questions..."
+                   style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 16px 12px 42px;color:var(--text-primary);font-size:14px;width:280px;outline:none;font-family:'Inter',sans-serif;"
+                   oninput="filterQuestions(this.value)" />
+        </div>
+    </div>
+
+    <!-- TAB SWITCHER -->
+    <div style="display:flex;gap:8px;margin-bottom:28px;">
+        <a href="?tab=tech&domain=@Uri.EscapeDataString(domain)"
+           class="tab-btn @(tab=="tech"?"tab-active":"")"
+           style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:50px;font-size:14px;font-weight:600;text-decoration:none;transition:all 0.2s;
+           @(tab=="tech" ? "background:var(--gradient);color:#fff;" : "background:var(--bg-card);border:1px solid var(--border);color:var(--text-secondary);")">
+            &lt;/&gt; Tech
+        </a>
+        <a href="?tab=hr"
+           class="tab-btn @(tab=="hr"?"tab-active":"")"
+           style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:50px;font-size:14px;font-weight:600;text-decoration:none;transition:all 0.2s;
+           @(tab=="hr" ? "background:var(--gradient);color:#fff;" : "background:var(--bg-card);border:1px solid var(--border);color:var(--text-secondary);")">
+            👥 HR
+        </a>
+    </div>
+
+    <div style="display:flex;gap:24px;align-items:flex-start;">
+
+        @if (tab == "tech")
+        {
+            <!-- DOMAIN SIDEBAR -->
+            <div style="width:230px;flex-shrink:0;">
+                <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;">Select Domain</div>
+                @foreach (var d in techDomains)
+                {
+                    <a href="?tab=tech&domain=@Uri.EscapeDataString(d)"
+                       style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-radius:10px;font-size:14px;font-weight:@(d==domain?"600":"400");margin-bottom:4px;text-decoration:none;transition:all 0.2s;
+                       @(d==domain ? "background:rgba(139,92,246,0.2);color:var(--purple-light);border:1px solid rgba(139,92,246,0.3);" : "color:var(--text-secondary);border:1px solid transparent;")">
+                        @d <span style="font-size:12px;">›</span>
+                    </a>
+                }
+            </div>
+
+            <!-- TECH QUESTIONS -->
+            <div style="flex:1;" id="questionsPanel">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+                    <span style="font-size:18px;">›_</span>
+                    <h2 style="font-size:20px;font-weight:700;">@domain Questions</h2>
+                </div>
+                @{ int tIdx = 1; }
+                @foreach (var (q, a) in currentTechQuestions)
+                {
+                    <div class="question-item" onclick="toggleAccordion(this)"
+                         style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:10px;cursor:pointer;transition:all 0.2s;">
+                        <div style="display:flex;align-items:center;gap:14px;">
+                            <span style="width:28px;height:28px;background:var(--bg-card2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--text-muted);flex-shrink:0;">@tIdx</span>
+                            <span class="q-text" style="font-size:15px;font-weight:500;flex:1;">@q</span>
+                            <span class="chevron" style="font-size:18px;color:var(--text-muted);transition:transform 0.2s;flex-shrink:0;">⌄</span>
+                        </div>
+                        <div class="answer-panel" style="display:none;margin-top:14px;margin-left:42px;">
+                            <div style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:10px;padding:14px 16px;">
+                                <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--purple-light);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+                                    💡 RECOMMENDED ANSWER
+                                </div>
+                                <p style="color:var(--text-secondary);font-size:13px;line-height:1.7;">@a</p>
+                            </div>
+                        </div>
+                    </div>
+                    tIdx++;
+                }
+            </div>
+        }
+        else
+        {
+            <!-- HR QUESTIONS -->
+            <div style="flex:1;" id="questionsPanel">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+                    <span style="font-size:18px;">💬</span>
+                    <h2 style="font-size:20px;font-weight:700;">HR &amp; Behavioral Questions</h2>
+                </div>
+                @{ int hrIdx = 1; }
+                @foreach (var (q, a) in hrQuestions)
+                {
+                    <div class="question-item" onclick="toggleAccordion(this)"
+                         style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:10px;cursor:pointer;transition:all 0.2s;">
+                        <div style="display:flex;align-items:center;gap:14px;">
+                            <span style="width:28px;height:28px;background:var(--bg-card2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--text-muted);flex-shrink:0;">@hrIdx</span>
+                            <span class="q-text" style="font-size:15px;font-weight:500;flex:1;">@q</span>
+                            <span class="chevron" style="font-size:18px;color:var(--text-muted);transition:transform 0.2s;flex-shrink:0;">⌄</span>
+                        </div>
+                        <div class="answer-panel" style="display:none;margin-top:14px;margin-left:42px;">
+                            <div style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:10px;padding:14px 16px;">
+                                <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--purple-light);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+                                    💡 HOW TO ANSWER
+                                </div>
+                                <p style="color:var(--text-secondary);font-size:13px;line-height:1.7;">@a</p>
+                            </div>
+                        </div>
+                    </div>
+                    hrIdx++;
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    function toggleAccordion(el) {
+        const panel = el.querySelector('.answer-panel');
+        const chevron = el.querySelector('.chevron');
+        const isOpen = panel.style.display === 'block';
+
+        // Close all
+        document.querySelectorAll('.answer-panel').forEach(p => p.style.display = 'none');
+        document.querySelectorAll('.chevron').forEach(c => { c.style.transform = ''; c.textContent = '⌄'; });
+        document.querySelectorAll('.question-item').forEach(q => q.style.borderColor = 'var(--border)');
+
+        if (!isOpen) {
+            panel.style.display = 'block';
+            chevron.style.transform = 'rotate(180deg)';
+            el.style.borderColor = 'rgba(139,92,246,0.4)';
+        }
+    }
+
+    function filterQuestions(term) {
+        const items = document.querySelectorAll('.question-item');
+        const q = term.toLowerCase();
+        items.forEach(item => {
+            const text = item.querySelector('.q-text').textContent.toLowerCase();
+            item.style.display = text.includes(q) ? 'block' : 'none';
+        });
+    }
+</script>
+}
