@@ -276,3 +276,5 @@ D:\6 SEM\ResumeProject\obj\Debug\net8.0\refint\ResumeProject.dll
 D:\6 SEM\ResumeProject\obj\Debug\net8.0\ResumeProject.pdb
 D:\6 SEM\ResumeProject\obj\Debug\net8.0\ResumeProject.genruntimeconfig.cache
 D:\6 SEM\ResumeProject\obj\Debug\net8.0\ref\ResumeProject.dll
+D:\6 SEM\ResumeProject\obj\Debug\net8.0\ResumeProject.sourcelink.json
+D:\6 SEM\ResumeProject\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
