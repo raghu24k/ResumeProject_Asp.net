@@ -1,0 +1,182 @@
+### [October 2, 2025: deepseek-r1-distill-llama-70b](https://console.groq.com/docs/deprecations#october-2-2025-deepseekr1distillllama70b)
+[October 2, 2025: deepseek-r1-distill-llama-70b](https://console.groq.com/docs/deprecations#october-2-2025-deepseekr1distillllama70b)
+
+```
+deepseek-r1-distill-llama-70b
+```
+
+In line with our commitment to bringing you cutting-edge models, on September 2, 2025, we emailed users to announce the deprecation of deepseek-r1-distill-llama-70b in favor of llama-3.3-70b-versatile or openai/gpt-oss-120b. The Llama 3.3 70B and GPT-OSS 120B models deliver exceptional performance, enabling your applications to harness state-of-the-art text generation with unparalleled speed on our platform.
+
+```
+deepseek-r1-distill-llama-70b
+```
+
+
+```
+llama-3.3-70b-versatile
+```
+
+
+```
+openai/gpt-oss-120b
+```
+
+
+```
+deepseek-r1-distill-llama-70b
+```
+
+
+```
+llama-3.3-70b-versatile
+```
+
+
+```
+openai/gpt-oss-120b
+```
+
+### [August 30, 2025: llama3-70b-8192 and llama3-8b-8192](https://console.groq.com/docs/deprecations#august-30-2025-llama370b8192-and-llama38b8192)
+[August 30, 2025: llama3-70b-8192 and llama3-8b-8192](https://console.groq.com/docs/deprecations#august-30-2025-llama370b8192-and-llama38b8192)
+
+```
+llama3-70b-8192
+```
+
+
+```
+llama3-8b-8192
+```
+
+In line with our commitment to bringing you cutting-edge models, on May 31, 2025, we emailed users to announce the deprecation of llama3-70b-8192 and llama3-8b-8192 in favor of llama-3.3-70b-versatile and llama-3.1-8b-instant respectively. The newer Llama 3.3 70B and Llama 3.1 8B models deliver exceptional performance, enabling your applications to harness state-of-the-art text generation with unparalleled speed on our platform.
+
+```
+llama3-70b-8192
+```
+
+
+```
+llama3-8b-8192
+```
+
+
+```
+llama-3.3-70b-versatile
+```
+
+
+```
+llama-3.1-8b-instant
+```
+
+
+```
+llama3-70b-8192
+```
+
+
+```
+llama-3.3-70b-versatile
+```
+
+
+```
+llama3-8b-8192
+```
+
+
+```
+llama-3.1-8b-instant
+```
+
+### [August 23, 2025: Distil Whisper Large V3 (English)](https://console.groq.com/docs/deprecations#august-23-2025-distil-whisper-large-v3-english)
+[August 23, 2025: Distil Whisper Large V3 (English)](https://console.groq.com/docs/deprecations#august-23-2025-distil-whisper-large-v3-english)
+In line with our commitment to bringing you cutting-edge models, we are announcing the deprecation of distil-whisper-large-v3-en in favor of whisper-large-v3-turbo. Whisper Large V3 Turbo is a more performant model for speech recognition and transcription tasks, and supports more languages.
+
+```
+distil-whisper-large-v3-en
+```
+
+
+```
+whisper-large-v3-turbo
+```
+
+
+```
+distil-whisper-large-v3-en
+```
+
+
+```
+whisper-large-v3-turbo
+```
+
+### [July 30, 2025: Mistral Saba 24B](https://console.groq.com/docs/deprecations#july-30-2025-mistral-saba-24b)
+[July 30, 2025: Mistral Saba 24B](https://console.groq.com/docs/deprecations#july-30-2025-mistral-saba-24b)
+In line with our commitment to bringing you cutting-edge models, we are announcing the deprecation of mistral-saba-24b in favor of qwen/qwen3-32b. The new Qwen 3 32B model delivers exceptional performance, enabling your applications to harness state-of-the-art text generation with unparalleled speed on our platform.
+
+```
+mistral-saba-24b
+```
+
+
+```
+qwen/qwen3-32b
+```
+
+
+```
+mistral-saba-24b
+```
+
+
+```
+qwen/qwen3-32b
+```
+
+### [July 14, 2025: Qwen QwQ 32B](https://console.groq.com/docs/deprecations#july-14-2025-qwen-qwq-32b)
+[July 14, 2025: Qwen QwQ 32B](https://console.groq.com/docs/deprecations#july-14-2025-qwen-qwq-32b)
+In line with our commitment to bringing you cutting-edge models, we are announcing the deprecation of qwen-qwq-32b in favor of qwen/qwen3-32b. The new Qwen 3 32B model delivers exceptional performance, enabling your applications to harness state-of-the-art text generation with unparalleled speed on our platform.
+
+```
+qwen-qwq-32b
+```
+
+
+```
+qwen/qwen3-32b
+```
+
+
+```
+qwen-qwq-32b
+```
+
+
+```
+qwen/qwen3-32b
+```
+
+### [June 6, 2025: Llama Guard 3](https://console.groq.com/docs/deprecations#june-6-2025-llama-guard-3)
+[June 6, 2025: Llama Guard 3](https://console.groq.com/docs/deprecations#june-6-2025-llama-guard-3)
+In line with our commitment to bringing you cutting-edge models, on May 9, 2025, we emailed users to announce the deprecation of llama-guard-3-8b in favor of meta-llama/llama-guard-4-12b. The new Llama Guard 4 model delivers exceptional multimodal performance, enabling your applications to harness state-of-the-art AI content moderation with unparalleled speed on our platform.
+
+```
+llama-guard-3-8b
+```
+
+
+```
+meta-llama/llama-guard-4-12b
+```
+
+
+```
+llama-guard-3-8b
+```
+
+
+```
+meta-llama/llama-guard-4-12b
+```
