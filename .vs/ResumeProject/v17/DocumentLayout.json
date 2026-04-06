@@ -1,0 +1,137 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\6 SEM\\ResumeProject\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EF86ECF5-6C74-4107-912B-D6F846E96CDF}|ResumeProject.csproj|d:\\6 sem\\resumeproject\\views\\interviewprep\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EF86ECF5-6C74-4107-912B-D6F846E96CDF}|ResumeProject.csproj|solutionrelative:views\\interviewprep\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF86ECF5-6C74-4107-912B-D6F846E96CDF}|ResumeProject.csproj|d:\\6 sem\\resumeproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF86ECF5-6C74-4107-912B-D6F846E96CDF}|ResumeProject.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF86ECF5-6C74-4107-912B-D6F846E96CDF}|ResumeProject.csproj|d:\\6 sem\\resumeproject\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EF86ECF5-6C74-4107-912B-D6F846E96CDF}|ResumeProject.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF86ECF5-6C74-4107-912B-D6F846E96CDF}|ResumeProject.csproj|d:\\6 sem\\resumeproject\\models\\education.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF86ECF5-6C74-4107-912B-D6F846E96CDF}|ResumeProject.csproj|solutionrelative:models\\education.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF86ECF5-6C74-4107-912B-D6F846E96CDF}|ResumeProject.csproj|d:\\6 sem\\resumeproject\\controllers\\resumecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF86ECF5-6C74-4107-912B-D6F846E96CDF}|ResumeProject.csproj|solutionrelative:controllers\\resumecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF86ECF5-6C74-4107-912B-D6F846E96CDF}|ResumeProject.csproj|d:\\6 sem\\resumeproject\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF86ECF5-6C74-4107-912B-D6F846E96CDF}|ResumeProject.csproj|solutionrelative:controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF86ECF5-6C74-4107-912B-D6F846E96CDF}|ResumeProject.csproj|d:\\6 sem\\resumeproject\\controllers\\analyzecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF86ECF5-6C74-4107-912B-D6F846E96CDF}|ResumeProject.csproj|solutionrelative:controllers\\analyzecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\6 SEM\\ResumeProject\\Views\\InterviewPrep\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\InterviewPrep\\Index.cshtml",
+              "ToolTip": "D:\\6 SEM\\ResumeProject\\Views\\InterviewPrep\\Index.cshtml",
+              "RelativeToolTip": "Views\\InterviewPrep\\Index.cshtml",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-25T07:50:40.519Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Education.cs",
+              "DocumentMoniker": "D:\\6 SEM\\ResumeProject\\Models\\Education.cs",
+              "RelativeDocumentMoniker": "Models\\Education.cs",
+              "ToolTip": "D:\\6 SEM\\ResumeProject\\Models\\Education.cs",
+              "RelativeToolTip": "Models\\Education.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-25T05:32:26.678Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ResumeController.cs",
+              "DocumentMoniker": "D:\\6 SEM\\ResumeProject\\Controllers\\ResumeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ResumeController.cs",
+              "ToolTip": "D:\\6 SEM\\ResumeProject\\Controllers\\ResumeController.cs",
+              "RelativeToolTip": "Controllers\\ResumeController.cs",
+              "ViewState": "AgIAAHIBAAAAAAAAAADwv38BAABTAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-25T05:09:02.585Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "D:\\6 SEM\\ResumeProject\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
+              "ToolTip": "D:\\6 SEM\\ResumeProject\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "Controllers\\AccountController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwAsAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-25T04:59:10.932Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\6 SEM\\ResumeProject\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\6 SEM\\ResumeProject\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-25T04:58:09.247Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AnalyzeController.cs",
+              "DocumentMoniker": "D:\\6 SEM\\ResumeProject\\Controllers\\AnalyzeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AnalyzeController.cs",
+              "ToolTip": "D:\\6 SEM\\ResumeProject\\Controllers\\AnalyzeController.cs",
+              "RelativeToolTip": "Controllers\\AnalyzeController.cs",
+              "ViewState": "AgIAAHYAAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-25T04:43:05.934Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\6 SEM\\ResumeProject\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\6 SEM\\ResumeProject\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAABkAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-24T05:05:19.452Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
