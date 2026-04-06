@@ -20,8 +20,7 @@ namespace ResumeProject.Controllers
         private int GetUserId() =>
             int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        // ─── DASHBOARD (My Resumes) ──────────────────────────────────────────
-
+        // DASHBOARD (My Resumes)
         public async Task<IActionResult> Dashboard()
         {
             int userId = GetUserId();
@@ -33,7 +32,7 @@ namespace ResumeProject.Controllers
             return View(resumes);
         }
 
-        // ─── ANALYZE PDF (AI Scorer) ────────────────────────────────────────
+        // ANALYZE PDF (AI Scorer) 
 
         public IActionResult Analyze()
         {
