@@ -4,6 +4,19 @@
     Layout = "_Layout";
 }
 
+<style>
+    .forgot-password-link {
+        font-size: 14px;
+        text-decoration: none;
+        color: #ccc;
+        transition: color 0.3s ease;
+    }
+    .forgot-password-link:hover {
+        color: #007bff; /* Change color on hover */
+        text-decoration: underline;
+    }
+</style>
+
 <nav class="auth-navbar">
     <a class="navbar-brand" asp-controller="Home" asp-action="Index">
         <span class="logo-icon">📄</span>
@@ -27,6 +40,11 @@
             <div class="alert alert-danger">@TempData["Error"]</div>
         }
 
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div id="successToast" class="alert alert-success" style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 4px; padding: 10px; margin-bottom: 20px;">@TempData["SuccessMessage"]</div>
+        }
+
         <form asp-action="Login" method="post">
             @Html.AntiForgeryToken()
 
@@ -39,7 +57,10 @@
             <div class="form-group">
                 <label asp-for="Password" class="form-label">Password</label>
                 <input asp-for="Password" class="form-control" type="password" placeholder="Your password" id="loginPassword" />
-                <span asp-validation-for="Password" class="field-validation-error"></span>
+                <span asp-validation-for="Password" class="field-validation-error" style="display: block;"></span>
+                <div style="text-align: right; margin-top: 8px;">
+                    <a asp-action="ForgotPassword" class="forgot-password-link">Forgot password?</a>
+                </div>
             </div>
 
             <button type="submit" id="signInBtn" class="btn btn-primary btn-full" style="margin-top:8px; background:#fff; color:#111;">Sign In</button>
@@ -53,4 +74,14 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        setTimeout(function () {
+            var toast = document.getElementById('successToast');
+            if (toast) {
+                toast.style.transition = 'opacity 0.5s ease';
+                toast.style.opacity = '0';
+                setTimeout(function () { toast.style.display = 'none'; }, 500);
+            }
+        }, 3000);
+    </script>
 }

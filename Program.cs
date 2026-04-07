@@ -10,6 +10,9 @@ builder.Services.AddControllersWithViews();
 // Groq AI Service
 builder.Services.AddSingleton<GroqService>();
 
+// Email Service for real email sending
+builder.Services.AddTransient<IEmailService, EmailService>();
+
 // EF Core with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
