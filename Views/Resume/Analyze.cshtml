@@ -312,13 +312,45 @@
     }
 
     function showResults(data) {
+        // ✅ CHECK FOR VALIDATION FAILURES FIRST
+        if (data.validationFailed) {
+            // Resume is NOT valid - show rejection message
+            const validation = data.validation;
+            let errorMsg = validation.reason + '\n\n';
+            
+            if (validation.suggestions && validation.suggestions.length > 0) {
+                errorMsg += '💡 Suggestions:\n';
+                validation.suggestions.forEach((suggestion, idx) => {
+                    errorMsg += `${idx + 1}. ${suggestion}\n`;
+                });
+            }
+            
+            if (validation.confidence) {
+                errorMsg += `\nValidation Confidence: ${validation.confidence}%`;
+            }
+            
+            showError('Not a Valid Resume', validation.reason.replace('❌ ', ''));
+            
+            // Show more detailed info in console for debugging
+            console.log('Validation Details:', validation);
+            return;
+        }
+
+        // ✅ VALIDATION PASSED - Show analysis results
+        const analysis = data.analysis || data;
+        
         // Reset drop zone
         dropContent.style.display = 'block';
         loadingContent.style.display = 'none';
         errorContent.style.display = 'none';
 
+        // Show validation success at top
+        if (data.validation && data.validation.detectedSections && data.validation.detectedSections.length > 0) {
+            console.log('✅ Resume validated with sections:', data.validation.detectedSections);
+        }
+
         // Score
-        var score = data.atsScore || 0;
+        var score = analysis.atsScore || 0;
         var scoreColor = score >= 80 ? '#10b981' : score >= 60 ? '#f59e0b' : '#ef4444';
         var scoreBg = score >= 80 ? 'rgba(16,185,129,0.2)' : score >= 60 ? 'rgba(245,158,11,0.2)' : 'rgba(239,68,68,0.2)';
         var scoreBorder = score >= 80 ? 'rgba(16,185,129,0.3)' : score >= 60 ? 'rgba(245,158,11,0.3)' : 'rgba(239,68,68,0.3)';
@@ -335,32 +367,32 @@
         setTimeout(() => { circle.style.strokeDashoffset = offset; }, 100);
 
         // Summary
-        document.getElementById('summaryText').textContent = data.summary || 'Analysis complete.';
+        document.getElementById('summaryText').textContent = analysis.summary || 'Analysis complete.';
 
         // Strengths
         var strengthsHtml = '';
-        (data.strengths || []).forEach(s => {
+        (analysis.strengths || []).forEach(s => {
             strengthsHtml += '<div class="result-card-mini"><span class="icon-check">✔</span>' + escHtml(s) + '</div>';
         });
         document.getElementById('strengthsList').innerHTML = strengthsHtml;
 
         // Improvements
         var improvementsHtml = '';
-        (data.improvements || []).forEach(s => {
+        (analysis.improvements || []).forEach(s => {
             improvementsHtml += '<div class="result-card-mini-danger"><span class="icon-cross">✕</span>' + escHtml(s) + '</div>';
         });
         document.getElementById('improvementsList').innerHTML = improvementsHtml;
 
         // Keywords
         var keywordsHtml = '';
-        (data.keywordSuggestions || []).forEach(k => {
+        (analysis.keywordSuggestions || []).forEach(k => {
             keywordsHtml += '<span class="keyword-tag">' + escHtml(k) + '</span>';
         });
         document.getElementById('keywordsList').innerHTML = keywordsHtml;
 
         // Tips
         var tipsHtml = '';
-        (data.formattingTips || []).forEach(t => {
+        (analysis.formattingTips || []).forEach(t => {
             tipsHtml += '<div class="result-card-mini-info">📐 ' + escHtml(t) + '</div>';
         });
         document.getElementById('tipsList').innerHTML = tipsHtml;

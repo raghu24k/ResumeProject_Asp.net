@@ -34,8 +34,17 @@ namespace ResumeProject.Controllers
                 if (string.IsNullOrWhiteSpace(request?.ResumeText))
                     return BadRequest(new { error = "No resume text provided." });
 
+                // ✅ VALIDATE the PDF is actually a resume first
+                var validation = await _groqService.ValidateResumeContent(request.ResumeText);
+                
+                if (!validation.IsValid)
+                {
+                    return Ok(new { success = false, validationFailed = true, validation });
+                }
+
+                // ✅ If validation passes, analyze the resume
                 var result = await _groqService.AnalyzeResumeText(request.ResumeText);
-                return Json(result);
+                return Json(new { success = true, analysis = result, validation });
             }
             catch (Exception ex)
             {
