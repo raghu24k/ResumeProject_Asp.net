@@ -9,89 +9,97 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ResumeProject
 build_property.RootNamespace = ResumeProject
-build_property.ProjectDir = C:\Users\rs889\source\repos\Rashmi_23SOECE11603\ResumeProject_Asp.net\
+build_property.ProjectDir = D:\6 SEM\ResumeProject\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\rs889\source\repos\Rashmi_23SOECE11603\ResumeProject_Asp.net
+build_property.MSBuildProjectDirectory = D:\6 SEM\ResumeProject
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/Account/Login.cshtml]
+[D:/6 SEM/ResumeProject/Views/Account/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/6 SEM/ResumeProject/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/Account/Register.cshtml]
+[D:/6 SEM/ResumeProject/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/Home/Index.cshtml]
+[D:/6 SEM/ResumeProject/Views/Account/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/6 SEM/ResumeProject/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/Home/Privacy.cshtml]
+[D:/6 SEM/ResumeProject/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/InterviewPrep/Index.cshtml]
+[D:/6 SEM/ResumeProject/Views/InterviewPrep/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW50ZXJ2aWV3UHJlcFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/Resume/Analyze.cshtml]
+[D:/6 SEM/ResumeProject/Views/Resume/Analyze.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdW1lXEFuYWx5emUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/Resume/Certifications.cshtml]
+[D:/6 SEM/ResumeProject/Views/Resume/Certifications.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdW1lXENlcnRpZmljYXRpb25zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/Resume/Dashboard.cshtml]
+[D:/6 SEM/ResumeProject/Views/Resume/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdW1lXERhc2hib2FyZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/Resume/DownloadResume.cshtml]
+[D:/6 SEM/ResumeProject/Views/Resume/DownloadResume.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdW1lXERvd25sb2FkUmVzdW1lLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/Resume/Education.cshtml]
+[D:/6 SEM/ResumeProject/Views/Resume/Education.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdW1lXEVkdWNhdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/Resume/Experience.cshtml]
+[D:/6 SEM/ResumeProject/Views/Resume/Experience.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdW1lXEV4cGVyaWVuY2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/Resume/PersonalDetails.cshtml]
+[D:/6 SEM/ResumeProject/Views/Resume/PersonalDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdW1lXFBlcnNvbmFsRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/Resume/Projects.cshtml]
+[D:/6 SEM/ResumeProject/Views/Resume/Projects.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdW1lXFByb2plY3RzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/Resume/Skills.cshtml]
+[D:/6 SEM/ResumeProject/Views/Resume/Skills.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdW1lXFNraWxscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/Shared/Error.cshtml]
+[D:/6 SEM/ResumeProject/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/6 SEM/ResumeProject/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/_ViewImports.cshtml]
+[D:/6 SEM/ResumeProject/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/_ViewStart.cshtml]
+[D:/6 SEM/ResumeProject/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/rs889/source/repos/Rashmi_23SOECE11603/ResumeProject_Asp.net/Views/Shared/_Layout.cshtml]
+[D:/6 SEM/ResumeProject/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-qpc757r89l

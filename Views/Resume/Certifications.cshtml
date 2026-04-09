@@ -55,9 +55,14 @@
             <div class="page-actions">
                 <button type="button" class="btn btn-primary btn-sm" onclick="analyzeAI(@Model.Id)">✨ Analyze AI</button>
                 <a href="/Resume/DownloadView/@Model.Id" target="_blank" class="btn btn-success btn-sm">⬇ Download PDF</a>
-                <button type="button" class="btn btn-ghost btn-sm" style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.25);">💾 Save</button>
+                <button type="button" class="btn btn-ghost btn-sm" style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.25);" onclick="document.querySelector('#addCertForm').submit();">💾 Save</button>
             </div>
         </div>
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">✓ @TempData["Success"]</div>
+        }
 
         @if (!Model.Certifications.Any())
         {
@@ -90,7 +95,7 @@
 
         <!-- Add Certification Form -->
         <div style="background:var(--bg-card);border:2px dashed var(--border);border-radius:16px;padding:24px;">
-            <form asp-action="AddCertification" method="post">
+            <form asp-action="AddCertification" method="post" id="addCertForm">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="resumeId" value="@Model.Id" />
                 <div class="form-row" style="margin-bottom:12px;">

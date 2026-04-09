@@ -87,17 +87,6 @@
             padding-bottom: 3px;
         }
 
-        /* ── Template Colors ───────────────────────────────── */
-        .tpl-professional .rp-section-title { color: #7c3aed; border-color: #7c3aed; }
-        .tpl-professional .rp-links a      { color: #7c3aed; }
-
-        .tpl-modern .rp-section-title       { color: #0891b2; border-color: #0891b2; }
-        .tpl-modern .rp-name                { color: #0891b2; }
-        .tpl-modern .rp-links a             { color: #0891b2; }
-
-        .tpl-minimalist .rp-section-title   { color: #222; border-color: #222; }
-        .tpl-minimalist .rp-links a         { color: #555; }
-
         /* ── Items ─────────────────────────────────────────── */
         .rp-item { margin-bottom: 10px; position: relative; }
         .rp-item-header { display: flex; justify-content: space-between; align-items: baseline; }
@@ -117,9 +106,150 @@
             font-size: 10px;
             font-weight: 500;
         }
-        .tpl-professional .rp-skill-tag { background: #f3f0ff; color: #7c3aed; }
-        .tpl-modern .rp-skill-tag       { background: #ecfeff; color: #0891b2; }
-        .tpl-minimalist .rp-skill-tag   { background: #f3f4f6; color: #333; }
+
+        /* =========================================
+           TEMPLATES
+           ========================================= */
+
+        /* 1. PROFESSIONAL TEMPLATE */
+        .tpl-professional {
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .tpl-professional .rp-name {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            color: #1f2937;
+            text-transform: uppercase;
+        }
+        .tpl-professional .rp-contact,
+        .tpl-professional .rp-links {
+            text-align: center;
+            color: #4b5563;
+        }
+        .tpl-professional .rp-links {
+            border-bottom: 2px solid #1f2937;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        .tpl-professional .rp-links a { color: #1f2937; }
+        .tpl-professional .rp-section-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #1f2937;
+            text-transform: uppercase;
+            border-bottom: 1px solid #9ca3af;
+            margin: 16px 0 8px;
+            padding-bottom: 2px;
+        }
+        .tpl-professional .rp-item-title { font-size: 12.5px; font-weight: bold; color: #111; }
+        .tpl-professional .rp-item-sub { font-style: italic; color: #374151; font-size: 11px; }
+        .tpl-professional .rp-skill-tag {
+            background: transparent;
+            color: #1f2937;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+        }
+
+        /* 2. MODERN TEMPLATE */
+        .tpl-modern {
+            font-family: 'Inter', sans-serif;
+        }
+        .tpl-modern .rp-name {
+            font-size: 26px;
+            font-weight: 800;
+            text-align: left;
+            color: #0891b2;
+            letter-spacing: -0.5px;
+        }
+        .tpl-modern .rp-contact,
+        .tpl-modern .rp-links {
+            text-align: left;
+            color: #64748b;
+        }
+        .tpl-modern .rp-links a { color: #0891b2; }
+        .tpl-modern .rp-section-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #0f172a;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-bottom: none;
+            background: #f1f5f9;
+            padding: 6px 12px;
+            border-left: 3px solid #0891b2;
+            border-radius: 0 4px 4px 0;
+            margin: 16px 0 10px;
+        }
+        .tpl-modern .rp-item {
+            border-left: 2px solid #e2e8f0;
+            padding-left: 12px;
+            margin-left: 4px;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        .tpl-modern .rp-item::before {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 5px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #0891b2;
+        }
+        .tpl-modern .rp-item-title { font-size: 12.5px; font-weight: 700; color: #0f172a; }
+        .tpl-modern .rp-item-sub { color: #0891b2; font-weight: 500; font-size: 11px; }
+        .tpl-modern .rp-skill-tag {
+            background: #ecfeff;
+            color: #0891b2;
+            font-weight: 600;
+            border-radius: 6px;
+        }
+
+        /* 3. MINIMALIST TEMPLATE */
+        .tpl-minimalist {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #333;
+        }
+        .tpl-minimalist .rp-name {
+            font-size: 28px;
+            font-weight: 300;
+            text-align: left;
+            color: #000;
+            letter-spacing: 2px;
+            margin-bottom: 2px;
+        }
+        .tpl-minimalist .rp-contact,
+        .tpl-minimalist .rp-links {
+            text-align: left;
+            color: #888;
+        }
+        .tpl-minimalist .rp-links { margin-bottom: 24px; }
+        .tpl-minimalist .rp-links a { color: #555; }
+        .tpl-minimalist .rp-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: none;
+            margin: 20px 0 12px;
+            padding: 0;
+        }
+        .tpl-minimalist .rp-item { margin-bottom: 14px; }
+        .tpl-minimalist .rp-item-title { font-size: 12.5px; font-weight: 500; color: #000; }
+        .tpl-minimalist .rp-item-sub { color: #666; font-size: 11px; }
+        .tpl-minimalist .rp-skill-tag {
+            background: transparent;
+            color: #555;
+            padding: 0;
+            margin-right: 12px;
+        }
+        .tpl-minimalist .rp-skill-tag::before {
+            content: '• ';
+            color: #ccc;
+        }
 
         /* ── Print media: hide everything except the resume ── */
         @@media print {

@@ -185,10 +185,14 @@ namespace ResumeProject.Controllers
             int userId = GetUserId();
             var resume = await _context.Resumes.FirstOrDefaultAsync(r => r.Id == resumeId && r.UserId == userId);
             if (resume == null) return NotFound();
+            // Skip if no meaningful data was entered
+            if (string.IsNullOrWhiteSpace(model.Company) && string.IsNullOrWhiteSpace(model.JobTitle))
+                return RedirectToAction(nameof(Experience), new { id = resumeId });
             model.ResumeId = resume.Id;
             _context.WorkExperiences.Add(model);
             resume.UpdatedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
+            TempData["Success"] = "Experience saved!";
             return RedirectToAction(nameof(Experience), new { id = resumeId });
         }
 
@@ -230,10 +234,14 @@ namespace ResumeProject.Controllers
             int userId = GetUserId();
             var resume = await _context.Resumes.FirstOrDefaultAsync(r => r.Id == resumeId && r.UserId == userId);
             if (resume == null) return NotFound();
+            // Skip if no meaningful data was entered
+            if (string.IsNullOrWhiteSpace(model.Institution) && string.IsNullOrWhiteSpace(model.Degree))
+                return RedirectToAction(nameof(Education), new { id = resumeId });
             model.ResumeId = resume.Id;
             _context.Educations.Add(model);
             resume.UpdatedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
+            TempData["Success"] = "Education saved!";
             return RedirectToAction(nameof(Education), new { id = resumeId });
         }
 
@@ -275,10 +283,14 @@ namespace ResumeProject.Controllers
             int userId = GetUserId();
             var resume = await _context.Resumes.FirstOrDefaultAsync(r => r.Id == resumeId && r.UserId == userId);
             if (resume == null) return NotFound();
+            // Skip if no meaningful data was entered
+            if (string.IsNullOrWhiteSpace(model.Name))
+                return RedirectToAction(nameof(Skills), new { id = resumeId });
             model.ResumeId = resume.Id;
             _context.Skills.Add(model);
             resume.UpdatedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
+            TempData["Success"] = "Skill saved!";
             return RedirectToAction(nameof(Skills), new { id = resumeId });
         }
 
@@ -320,10 +332,14 @@ namespace ResumeProject.Controllers
             int userId = GetUserId();
             var resume = await _context.Resumes.FirstOrDefaultAsync(r => r.Id == resumeId && r.UserId == userId);
             if (resume == null) return NotFound();
+            // Skip if no meaningful data was entered
+            if (string.IsNullOrWhiteSpace(model.Title))
+                return RedirectToAction(nameof(Projects), new { id = resumeId });
             model.ResumeId = resume.Id;
             _context.Projects.Add(model);
             resume.UpdatedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
+            TempData["Success"] = "Project saved!";
             return RedirectToAction(nameof(Projects), new { id = resumeId });
         }
 
@@ -366,10 +382,14 @@ namespace ResumeProject.Controllers
             int userId = GetUserId();
             var resume = await _context.Resumes.FirstOrDefaultAsync(r => r.Id == resumeId && r.UserId == userId);
             if (resume == null) return NotFound();
+            // Skip if no meaningful data was entered
+            if (string.IsNullOrWhiteSpace(model.CertificationName))
+                return RedirectToAction(nameof(Certifications), new { id = resumeId });
             model.ResumeId = resume.Id;
             _context.Certifications.Add(model);
             resume.UpdatedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
+            TempData["Success"] = "Certification saved!";
             return RedirectToAction(nameof(Certifications), new { id = resumeId });
         }
 

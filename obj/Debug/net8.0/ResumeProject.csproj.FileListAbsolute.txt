@@ -137,7 +137,6 @@ C:\Users\rs889\source\repos\Rashmi_23SOECE11603\ResumeProject\bin\Debug\net8.0\r
 C:\Users\rs889\source\repos\Rashmi_23SOECE11603\ResumeProject\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\Users\rs889\source\repos\Rashmi_23SOECE11603\ResumeProject\obj\Debug\net8.0\ResumeProject.csproj.AssemblyReference.cache
 C:\Users\rs889\source\repos\Rashmi_23SOECE11603\ResumeProject\obj\Debug\net8.0\ResumePr.485F7862.Up2Date
-D:\6 SEM\ResumeProject\bin\Debug\net8.0\appsettings.Development.json
 D:\6 SEM\ResumeProject\bin\Debug\net8.0\appsettings.json
 D:\6 SEM\ResumeProject\bin\Debug\net8.0\ResumeProject.staticwebassets.runtime.json
 D:\6 SEM\ResumeProject\bin\Debug\net8.0\ResumeProject.staticwebassets.endpoints.json
@@ -277,4 +276,4 @@ D:\6 SEM\ResumeProject\obj\Debug\net8.0\ResumeProject.pdb
 D:\6 SEM\ResumeProject\obj\Debug\net8.0\ResumeProject.genruntimeconfig.cache
 D:\6 SEM\ResumeProject\obj\Debug\net8.0\ref\ResumeProject.dll
 D:\6 SEM\ResumeProject\obj\Debug\net8.0\ResumeProject.sourcelink.json
-D:\6 SEM\ResumeProject\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+D:\6 SEM\ResumeProject\bin\Debug\net8.0\appsettings.Development.json
